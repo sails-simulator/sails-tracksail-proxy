@@ -11,7 +11,14 @@ class TracksailTCPHandler(socketserver.BaseRequestHandler):
 
             print('{} wrote: {}'.format(self.client_address[0], data))
 
-            self.request.sendall(b'10')
+            command = data.pop(0)
+
+            if command == 'get':
+                self.request.sendall(b'10')
+            elif command == 'set':
+                self.request.sendall(b'OK')
+            else:
+                self.request.sendall(b'ERROR')
 
 if __name__ == "__main__":
     HOST, PORT = 'localhost', 5555
