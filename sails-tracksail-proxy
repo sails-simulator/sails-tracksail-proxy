@@ -3,10 +3,15 @@ import socketserver
 
 class TracksailTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
-        self.data = self.request.recv(1024).strip()
-        print("{} wrote:".format(self.client_address[0]))
-        print(self.data)
-        self.request.sendall('10')
+        while True:
+            data = self.request.recv(1024) \
+                       .decode('utf-8') \
+                       .strip(' \0') \
+                       .split(' ')
+
+            print('{} wrote: {}'.format(self.client_address[0], data))
+
+            self.request.sendall(b'10')
 
 if __name__ == "__main__":
     HOST, PORT = 'localhost', 5555
