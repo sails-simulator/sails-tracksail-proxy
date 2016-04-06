@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import socketserver
 
+def get_attribute(attr):
+    return '10'
+
 class TracksailTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         while True:
@@ -14,7 +17,9 @@ class TracksailTCPHandler(socketserver.BaseRequestHandler):
             command = data.pop(0)
 
             if command == 'get':
-                self.request.sendall(b'10')
+                attribute = data.pop(0)
+                ret = get_attribute(attribute)
+                self.request.sendall(ret.encode())
             elif command == 'set':
                 self.request.sendall(b'OK')
             else:
