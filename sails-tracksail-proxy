@@ -2,8 +2,14 @@
 
 import socketserver
 
-def get_attribute(attr):
-    return '10'
+
+class Translator(object):
+    def __init__(self, sailsd_instance):
+        self.sailsd_instance = sailsd_instance
+
+    def get_attribute(self, attr):
+        return '10'
+
 
 class TracksailTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
